@@ -181,7 +181,7 @@
                     @foreach ($gejala as $index => $item)
                     @csrf
                     <div class="form-group active" id="question-{{ $index }}" style="display: {{ $index == 0 ? 'block' : 'none' }};">
-                        <label class="tanya">{{ $item->nama_gejala }}</label>
+                        <label class="tanya">{{ $loop->iteration }}. {{ $item->nama_gejala }}</label>
                         <div class="btn-group btn-group-toggle d-flex flex-wrap" data-toggle="buttons">
                             <label class="btn btn-outline-danger flex-fill">
                                 <input type="radio" id="tidak{{ $index }}" name="{{ $item->id }}" value="0" autocomplete="off" onchange="updateButton()"> Tidak
