@@ -55,7 +55,6 @@ class LoginController extends Controller
     }
     public function signup(Request $request)
     {
-        // dd($request);
         $validatedData = $request->validate([
             'nama' => 'required',
             'username' => 'required|unique:users',
@@ -64,8 +63,7 @@ class LoginController extends Controller
             'password' => 'required|confirmed',
         ]);
 
-        // dd($request->session()->get('errors'));
-        // dd($validatedData['umur']);
+    
         $user = User::create([
             'nama' => $validatedData['nama'],
             'level' => 'user',

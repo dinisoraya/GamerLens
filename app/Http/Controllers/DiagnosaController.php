@@ -48,11 +48,10 @@ class DiagnosaController extends Controller
             $gejalaTuru = [];
             $nilaiCF = $rules->where('kecanduan_id', $i);
 
-            // dd($nilaiCF);
             foreach ($nilaiCF as $key) {
                 $gejalaTuru[$key->gejala_id] = $key->value_cf;
             }
-            // dd($gejalaTuru);
+        
             // memasukkan menghitung nilai CFG dengan looping dari array gejalaturu  
             foreach ($gejalaTuru as $key => $gejala) {
                 $CFG[$key] = $users[$key] * $gejala;
@@ -96,12 +95,6 @@ class DiagnosaController extends Controller
         echo $maxHasil * 100 . '% )';
         echo '<br>';
 
-        // dd($hasil);
-        // return view('dashboard.diagnosa.hasil', [
-        //     'hasil' => $hasil,
-        //     'rules' => $rule->all(),
-        //     'penyakits' => $penyakit,
-        // ]);
         echo 'data';
         echo '<br>';
         echo round($maxHasil, 2) ;
@@ -116,7 +109,6 @@ class DiagnosaController extends Controller
         $users = request()->except('_token');
         $hasil = [];
 
-        // dd($users);
         foreach ($kecanduan as $key => $candu) {
             $i = $candu->id;
             $idGejala = [];
@@ -153,22 +145,15 @@ class DiagnosaController extends Controller
 
         $maxHasil = max($hasil);
         $namaKecanduan = $kecanduan->where('id', array_search($maxHasil, $hasil))->first();
-        // dd($users);
         
         $gejalaUser = [];
         foreach ($users as $key => $value) {
             if($value>0){
                 $nGejala = Gejala::firstWhere('id', $key);
-                // dd($nGejala);
-                // echo $value;
-                // array_push($gejalaUser, $nGejala->nama_gejala . ' (' . $value . ')');
                 array_push($gejalaUser, $nGejala->nama_gejala);
             }
         }
-        // dd($gejalaUser);
-        // exit();
-        // dd($namaPenyakit->id,);
-        // $maxHasil = round($maxHasil, 5);
+        
         $precision = 4;
         $factor = pow(10, $precision);
         $maxHasil = floor($maxHasil * $factor) / $factor;
@@ -180,16 +165,9 @@ class DiagnosaController extends Controller
             'gejala_pengguna' => serialize($gejalaUser),
             'value_cf' => $maxHasil,
         ]);
-        // dd($riwayatDiagnosa);
+
         return redirect('/dashboard/riwayat/' . $riwayatDiagnosa->id);
 
-        // return view('dashboard.user.hasil', [
-        //     'gejala'=> $gejalaUser,
-        //     'hasil' => $maxHasil,
-        //     'kecanduan' => $namaKecanduan->nama_kecanduan,
-        //     'saran' => $namaKecanduan->saran_kecanduan,
-        //     'cetak_id'=> $riwayatDiagnosa->id
-        // ]);
     }
     /**
      * Show the form for creating a new resource.

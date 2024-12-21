@@ -18,7 +18,6 @@ class RiwayatController extends Controller
         }else{
             $riwayat = RiwayatDiagnosa::with('user');
         }
-        // dd($riwayat->get());
         if (auth()->user()->level == 'admin') {
             return view('dashboard.riwayat.index', [
                 'riwayats' => $riwayat->orderBy('id', 'desc')->get(),
@@ -55,28 +54,18 @@ class RiwayatController extends Controller
     public function show(string $id)
     {
         $riwayat = RiwayatDiagnosa::with(['user', 'kecanduan'])->find($id);
-        // dd($riwayat);
         if (Auth::user()->level!='admin') {
             if (Auth::user()->id !== $riwayat->id_pengguna) {
                 return abort(403);
             }
         }
 
-        // dd($riwayat->gejala_pengguna);
-        // dd($unserializedData = unserialize($riwayat->gejala_pengguna));
-        
-        // dd($riwayat);
         
         if (auth()->user()->level == 'admin') {
             return view('dashboard.riwayat.show', compact('riwayat'));
         } else {
             return view('dashboard.user.hasil', compact('riwayat'));
         }
-        // return view('dashboard.riwayat.show', [
-        //     'riwayat' => $riwayat,
-        // ]);
-        
-        // echo "hallo";
     }
 
     /**

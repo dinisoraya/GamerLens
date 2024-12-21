@@ -20,10 +20,6 @@ class BasisAturanController extends Controller
         $kecanduans = Kecanduan::all();
 
         return view('dashboard.aturan.index', compact('gejalas', 'kecanduans'));
-        // return view("dashboard.aturan.index", [
-        //     'kecanduan' => Kecanduan::orderBy('id')->get(),
-
-        // ]);
     }
 
     /**
@@ -43,9 +39,6 @@ class BasisAturanController extends Controller
         $id = request()->only('id');
         $rule = BasisAturan::orderBy('kecanduan_id')->where('kecanduan_id', $id);
         $data = request()->except(['_token', 'id']);
-        // $data = request()->except('_token');
-        // $gejala = Gejala::whereNotIn('id', $rule->pluck('gejala_id'))->latest()->get();
-        // dd($data);
         $idArray = request()->only('id');
         $id = $idArray['id'];
 
